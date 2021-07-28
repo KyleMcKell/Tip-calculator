@@ -257,6 +257,11 @@
 	background-color: var(--lightcyan1);
 }
 
+.reset-button:focus {
+	outline: none;
+	background-color: var(--lightcyan2);
+}
+
 .reset-button:disabled {
 	opacity: 0.5;
 }

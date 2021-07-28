@@ -24,11 +24,10 @@ const updateTip = () => {
 	const tipDecimal = tipPercent / 100;
 	const totalTip = tipDecimal * billAmount;
 	const totalBillAfterTip = totalTip + billAmount;
-	tipPerPerson = parseFloat((totalTip / numPeople).toFixed(2));
-	totalPerPerson = parseFloat((totalBillAfterTip / numPeople).toFixed(2));
+	tipPerPerson = parseFloat(totalTip / numPeople).toFixed(2);
+	totalPerPerson = parseFloat(totalBillAfterTip / numPeople).toFixed(2);
 	tipPerPersonSpan.innerText = tipPerPerson;
 	totalPerPersonSpan.innerText = totalPerPerson;
-	hasChanged = true;
 	resetButton.disabled = false;
 };
 

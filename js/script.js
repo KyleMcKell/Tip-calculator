@@ -7,6 +7,7 @@ const resetButton = document.querySelector('.reset-button');
 const numPeopleError = document.querySelector('.people-error');
 const customInput = document.querySelector('.tip-custom');
 const peopleInputSection = document.querySelector('.people-input-section');
+const billInputSection = document.querySelector('.bill-input-section');
 
 const tipButtons = Array.prototype.slice.call(tipButtonsNodeList);
 
@@ -27,6 +28,8 @@ const updateTip = () => {
 	totalPerPerson = parseFloat((totalBillAfterTip / numPeople).toFixed(2));
 	tipPerPersonSpan.innerText = tipPerPerson;
 	totalPerPersonSpan.innerText = totalPerPerson;
+	hasChanged = true;
+	resetButton.disabled = false;
 };
 
 customInput.addEventListener('blur', () => {
@@ -53,6 +56,7 @@ resetButton.addEventListener('click', () => {
 	customInput.value = '';
 	tipBtnValues[5] = customValue;
 	updateTip();
+	resetButton.disabled = true;
 });
 
 // adds a listener to each tip % button that adjusts the tip % to that value
@@ -69,6 +73,10 @@ tipButtons.forEach((selectedTipBtn) => {
 	});
 });
 
+billInput.addEventListener('focus', () => {
+	billInputSection.classList.add('input-selected');
+});
+
 // fires when bill input is deselected
 billInput.addEventListener('blur', () => {
 	if (billInput.value !== '') {
@@ -76,13 +84,19 @@ billInput.addEventListener('blur', () => {
 		const moneyValue = parseFloat(value.toFixed(2));
 		billAmount = moneyValue;
 		billInput.value = moneyValue;
+		billInputSection.classList.remove('input-selected');
 		updateTip();
 	} else {
 		// if NaN, treat it as 0
+		billInputSection.classList.remove('input-selected');
 		billInput.value = 0;
 		billAmount = 0;
 		updateTip();
 	}
+});
+
+numPeopleInput.addEventListener('focus', () => {
+	peopleInputSection.classList.add('input-selected');
 });
 
 // fires when numpeople input is deselected
@@ -90,6 +104,7 @@ numPeopleInput.addEventListener('blur', () => {
 	if (numPeopleInput.value === '0' || numPeopleInput.value === '') {
 		numPeopleError.style.display = 'inline';
 		peopleInputSection.classList.add('error');
+		peopleInputSection.classList.remove('input-selected');
 		tipPerPerson = 0;
 		totalPerPerson = 0;
 		tipPerPersonSpan.innerText = tipPerPerson;
@@ -97,6 +112,7 @@ numPeopleInput.addEventListener('blur', () => {
 	} else {
 		numPeopleError.style.display = 'none';
 		peopleInputSection.classList.remove('error');
+		peopleInputSection.classList.remove('input-selected');
 		if (numPeopleInput.value % 1 != 0) {
 			numPeopleInput.value = Math.round(numPeopleInput.value);
 		}
@@ -104,5 +120,3 @@ numPeopleInput.addEventListener('blur', () => {
 		updateTip();
 	}
 });
-
-updateTip();

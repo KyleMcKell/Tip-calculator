@@ -13,10 +13,6 @@
 	--error: red;
 }
 
-body {
-	/* min-height: 100vh; */
-}
-
 .body-container {
 	display: flex;
 	flex-direction: column;
